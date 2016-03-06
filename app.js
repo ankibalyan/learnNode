@@ -1,17 +1,17 @@
 'use strict';
 var http = require('http'),
 
-	connect = require('connect'),
+	express = require('express'),
 
 	logger = require('./logger'),
 	mappings = require('./mappings');
 
-var app = connect();
+var app = express();
 
 app.use(logger("logger"));
-app.use(logger("logger"));
-app.use(function (req, res) {
-	mappings.get(req.url,function(err, mapping) {
+
+app.get('/:alias',function (req, res) {
+	mappings.get(req.params.alias,function(err, mapping) {
 		if(err){
 			res.writeHead(404);
 			res.write("404 error")

@@ -1,10 +1,21 @@
-<!doctyme html>
+<!doctype html>
 <html>
 	<head>
 		<title>My app title</title>
 	</head>
 	<body>
 		<h1>My Mappings</h1>
-		<%= mappings %>
+		<table>
+			<tr>
+				<th>Alias</th>
+				<th>Url</th>
+			</tr>
+			<% for(var i = 0; i < mappings.length; i++){ %>
+			<tr>
+				<td><%= mappings[i].alias %></td>
+				<td><%= mappings[i].url %></td>
+			</tr>
+			<% } %>
+		</table>
 	</body>
 </html>

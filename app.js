@@ -1,5 +1,6 @@
 'use strict';
 var http = require('http'),
+	path = require('path'),
 
 	express = require('express'),
 
@@ -10,20 +11,22 @@ var app = express();
 
 app.use(logger("logger"));
 
+app.set('views',path.join(__dirname,'views'));
+app.set('view engine','ejs');
+app.get('/',function(req, res) {
+	// res.send("Helo World!");
+	res.render('index', {
+		mappings: mappings 
+	})
+});
+
 app.get('/:alias',function (req, res) {
 	mappings.get(req.params.alias,function(err, mapping) {
 		if(err){
-			res.writeHead(404);
-			res.write("404 error")
+			res.sendStatus(404);
 			return res.end();
 		}
-		// res.writeHead(302,{
-		// 	location: mappings[alias]
-		// });
-		res.writeHead(302,{
-			'content-type': 'text/html',
-			'location': mapping
-		});
+		res.redirect(mapping);
 		res.end();
 	});
 });
